@@ -1,9 +1,3 @@
-import { useAllocation } from "./hooks/useAllocation";
-import { Navbar } from "./components/layout/Navbar";
-import { AllocationView } from "./components/layout/AllocationView";
-import { OrdersTable } from "./components/orders/OrdersTable";
-import { PricesTable } from "./components/prices/PricesTable";
-
 export default function App() {
   const {
     orders,

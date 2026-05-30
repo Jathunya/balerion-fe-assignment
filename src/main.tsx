@@ -1,10 +1,21 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+// =============================================================================
+// main.tsx
+// =============================================================================
+// PURPOSE: The entry point of the React application.
+// This file starts everything. Vite reads this file first.
+//
+// React.StrictMode: Wrapping App in StrictMode enables extra warnings in
+// development. It helps catch bugs early (like side effects in render).
+// It has NO effect in the production build.
+// =============================================================================
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
-)
+  </React.StrictMode>
+);

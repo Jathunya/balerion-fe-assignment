@@ -1,59 +1,74 @@
-export default function App() {
+// =============================================================================
+// App.tsx
+// =============================================================================
+// PURPOSE: The root component of the application. This is where everything
+// comes together. It:
+//   1. Calls useAllocation() to get all state and actions
+//   2. Renders the Navbar with action buttons
+//   3. Renders the AllocationView with the main content
+//
+// WHY SO SIMPLE: App.tsx intentionally does very little itself. It just
+// connects the hook (data + logic) to the UI components (visual layer).
+// This separation makes each part easy to understand and test independently.
+//
+// MENTAL MODEL:
+//   useAllocation hook  →  data + logic
+//   App.tsx             →  connects hook to UI
+//   Navbar              →  top bar with action buttons
+//   AllocationView      →  main content area
+// =============================================================================
+
+import React from 'react';
+import { Navbar }         from './layout/Navbar';
+import { AllocationView } from './layout/AllocationView';
+import { useAllocation }  from './hooks/useAllocation';
+
+function App() {
+  // All state and actions come from this one hook
   const {
-    orders,
-    prices,
-    tab,
+    displayOrders,
+    customers,
+    summaryStats,
     filters,
-    allResults,
-    filteredResults,
-    summary,
-    setTab,
-    updateOrder,
-    addOrder,
-    deleteOrder,
-    updatePrice,
-    addPrice,
-    deletePrice,
-    setSearch,
-    setStatusFilter,
-    toggleSort,
+    sortConfig,
+    isLoading,
+    isLargeSet,
+    handleAutoAllocate,
+    handleResetAllocations,
+    handleExportCSV,
+    handleToggleLargeDataset,
+    handleSort,
+    handleFilterChange,
+    handleManualAllocate,
   } = useAllocation();
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f4f4fb", fontFamily: "'Inter', 'Segoe UI', sans-serif" }}>
-      <Navbar tab={tab} onTabChange={setTab} />
+    <div className="min-h-screen bg-slate-50 font-sans">
+      {/* Top navigation bar with action buttons */}
+      <Navbar
+        onAutoAllocate={handleAutoAllocate}
+        onReset={handleResetAllocations}
+        onExportCSV={handleExportCSV}
+        onToggleLargeDataset={handleToggleLargeDataset}
+        isLoading={isLoading}
+        isLargeSet={isLargeSet}
+        totalOrders={summaryStats.totalOrders}
+      />
 
-      <main style={{ padding: "28px 32px", maxWidth: 1400, margin: "0 auto" }}>
-        {tab === "allocation" && (
-          <AllocationView
-            summary={summary}
-            allResults={allResults}
-            filteredResults={filteredResults}
-            filters={filters}
-            onSearch={setSearch}
-            onStatusFilter={setStatusFilter}
-            onSort={toggleSort}
-          />
-        )}
-
-        {tab === "orders" && (
-          <OrdersTable
-            orders={orders}
-            onUpdate={updateOrder}
-            onDelete={deleteOrder}
-            onAdd={addOrder}
-          />
-        )}
-
-        {tab === "prices" && (
-          <PricesTable
-            prices={prices}
-            onUpdate={updatePrice}
-            onDelete={deletePrice}
-            onAdd={addPrice}
-          />
-        )}
-      </main>
+      {/* Main content area */}
+      <AllocationView
+        displayOrders={displayOrders}
+        customers={customers}
+        summaryStats={summaryStats}
+        filters={filters}
+        sortConfig={sortConfig}
+        isLoading={isLoading}
+        onSort={handleSort}
+        onFilterChange={handleFilterChange}
+        onManualAllocate={handleManualAllocate}
+      />
     </div>
   );
 }
+
+export default App;

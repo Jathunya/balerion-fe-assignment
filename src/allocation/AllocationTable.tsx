@@ -19,10 +19,10 @@
 // =============================================================================
 
 import React, { memo } from 'react';
-import type { SubOrder, SortConfig, Customer } from '../../types';
-import { SortableHeader } from '../ui/SortableHeader';
-import { OrderTypeBadge, AllocationBadge } from '../ui/Badge';
-import { EditableCell } from '../ui/EditableCell';
+import type { SubOrder, SortConfig, Customer } from '../types';
+import { SortableHeader } from '../components/ui/SortableHeader';
+import { OrderTypeBadge, AllocationBadge } from '../components/ui/Badge';
+import { EditableCell } from '../components/ui/EditableCell';
 
 interface AllocationTableProps {
   orders:       SubOrder[];

@@ -222,8 +222,6 @@ npm run preview
 
 * Unit tests
 * Integration tests
-* Virtualized table rendering
-* Backend API integration
 * Allocation history tracking
 
 ---

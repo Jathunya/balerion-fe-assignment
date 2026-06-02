@@ -1,101 +1,91 @@
-# Salmon Allocation Management System
+# 🐟 Salmon Allocation Management System
 
-A React + TypeScript application for allocating limited salmon inventory across customer orders based on business priority rules, inventory availability, customer credit limits, and dynamic pricing.
+A React + TypeScript application for allocating salmon inventory across customer orders while enforcing allocation rules, inventory constraints, customer credit limits, and dynamic pricing.
 
 <img width="1366" height="725" alt="salmon_allocation" src="https://github.com/user-attachments/assets/20cdc299-eaa8-44e2-9514-2c5bb47fcae9" />
 
+## Live Demo
+[
+https://your-project.vercel.app](https://balerion-fe-assignment.vercel.app/)
+
 ---
 
-## Problem Statement
+## Overview
 
-The company receives a large volume of salmon orders from multiple customers.
+This project was developed as a frontend assignment.
 
-Available inventory is limited and distributed across multiple warehouses and suppliers.
+The application manages salmon inventory allocation for customer orders and supports both manual and automatic allocation workflows.
 
-The system must allocate inventory fairly and efficiently while enforcing business rules such as:
+The allocation process follows business rules regarding:
 
-- Order priority
-- FIFO processing
-- Credit limits
-- Dynamic pricing
-- Warehouse/Supplier wildcard handling
-- Banker's rounding
-
-The application supports both manual allocation and automated allocation.
+* Order priority
+* Inventory availability
+* Customer credit limits
+* Dynamic pricing
+* Warehouse and supplier matching
+* Banker's rounding
 
 ---
 
 ## Features
 
-### Auto Allocation Engine
+### Auto Allocation
 
-Automatically allocates inventory using the following priority:
+Automatically allocates inventory based on order priority:
 
 1. EMERGENCY
 2. OVERDUE
 3. DAILY
 
-Within the same priority group:
+Orders within the same priority level are processed using FIFO ordering.
 
-- Older orders are processed first (FIFO)
+The allocation process also validates:
 
-Additional rules:
-
-- Customer credit limits are enforced
-- Inventory availability is validated
-- Wildcard warehouse (`WH-000`) is resolved automatically
-- Wildcard supplier (`SP-000`) is resolved automatically
-- Quantities use Banker's Rounding
-- Pricing is calculated dynamically per supplier and order type
+* Available inventory
+* Customer credit limits
+* Warehouse matching
+* Supplier matching
 
 ---
 
 ### Manual Allocation
 
-Users can manually edit allocated quantities directly from the allocation table.
+Users can manually update allocation quantities directly from the table.
 
-Validation includes:
+Validation prevents:
 
-- Cannot exceed available inventory
-- Cannot exceed customer credit limit
-- Pricing recalculates automatically
-
----
-
-### Search & Filtering
-
-Users can quickly locate orders using:
-
-- Global search
-- Order type filtering
-- Customer filtering
-
-Designed for large datasets (5,000+ orders).
+* Allocating more than available inventory
+* Exceeding customer credit limits
 
 ---
 
-### Performance Testing Mode
+### Search and Filter
 
-The application includes a built-in dataset generator that loads more than 5,000 orders for performance validation.
+Users can search and filter orders to quickly locate specific records.
 
-Users can switch between:
+Available filters include:
 
-- Sample dataset
-- Large dataset (5,000+ orders)
-
----
-
-### Export CSV
-
-Current allocation results can be exported for downstream processing.
+* Customer
+* Order Type
+* Search keywords
 
 ---
 
-## Allocation Algorithm
+### Performance Test Mode
 
-### Priority Sorting
+The application includes support for testing with datasets containing more than 5,000 orders.
 
-Orders are processed using:
+---
+
+### CSV Export
+
+Allocation results can be exported as CSV files.
+
+---
+
+## Allocation Rules
+
+### Priority Order
 
 ```text
 EMERGENCY
@@ -105,58 +95,36 @@ OVERDUE
 DAILY
 ```
 
-Orders with the same priority are sorted by creation date (FIFO).
+Orders with the same priority are processed by creation date (FIFO).
 
----
-
-### Inventory Selection Strategy
+### Inventory Selection
 
 For each order:
 
-1. Find matching inventory records
-2. Resolve wildcard warehouse/supplier if applicable
-3. Sort inventory by remaining stock (highest first)
-4. Allocate greedily until demand or stock is exhausted
+1. Find matching inventory
+2. Resolve wildcard warehouse or supplier when applicable
+3. Sort inventory by remaining stock
+4. Allocate inventory until stock or demand is exhausted
 
----
+### Credit Validation
 
-### Credit Enforcement
-
-Before allocating:
+Allocation is limited by the customer's available credit.
 
 ```text
-Remaining Credit
+Available Credit
 =
 Credit Limit
 -
 Used Credit
 ```
 
-Allocation is capped by the customer's available credit.
-
----
-
 ### Pricing
 
-Unit price is calculated using:
-
-```text
-Base Price × Price Tier %
-```
-
-Example:
-
-| Order Type | Multiplier |
-|------------|------------|
-| EMERGENCY | 125% |
-| OVERDUE | 100% |
-| DAILY | 90% |
-
----
+Pricing is calculated based on supplier and order type.
 
 ### Banker's Rounding
 
-Financial calculations use Banker's Rounding to eliminate systematic upward rounding bias.
+Financial calculations use Banker's Rounding to reduce rounding bias.
 
 Examples:
 
@@ -171,96 +139,50 @@ Examples:
 
 ### Frontend
 
-- React 19
-- TypeScript
-- Vite
+* React
+* TypeScript
+* Vite
 
 ### UI
 
-- Tailwind CSS 4
-- ShadCN UI
-- Radix UI
-
-### Utilities
-
-- CSV Export
-- Custom Allocation Engine
+* Tailwind CSS
+* Radix UI
+* Lucide React
 
 ---
 
-## Architecture
+## Project Structure
 
 ```text
 src/
-│
-├── components/
-│   ├── allocation/
-│   └── layout/
-│
+├── allocation/
 ├── hooks/
-│   └── useAllocation.ts
-│
+├── layout/
 ├── utils/
-│   └── allocation.ts
-│
 ├── data/
-│
 ├── types/
-│
 └── App.tsx
 ```
 
-### Design Decisions
+### Main Modules
 
-#### Business Logic Isolation
+#### allocation/
 
-Allocation logic is separated from UI components.
+UI components related to allocation management.
 
-```text
-UI Components
-    ↓
-useAllocation Hook
-    ↓
-Allocation Engine
-```
+#### hooks/useAllocation.ts
 
-Benefits:
+Manages allocation state and allocation actions.
 
-- Easier testing
-- Better maintainability
-- Clear separation of concerns
+#### utils/allocation.ts
 
----
-
-#### Centralized State Management
-
-A custom `useAllocation` hook acts as the single source of truth for:
-
-- Orders
-- Inventory
-- Customers
-- Filters
-- Sorting
-- Allocation actions
-
----
-
-#### Performance Optimizations
-
-To support 5,000+ orders:
-
-- `useMemo`
-  - Prevents unnecessary filtering/sorting recalculations
-- `useCallback`
-  - Prevents unnecessary function recreation
-- Derived state is memoized
-- Allocation engine operates on copied inventory state
+Contains allocation calculation and validation logic.
 
 ---
 
 ## Getting Started
 
-### Install
+### Install Dependencies
 
 ```bash
 npm install
@@ -270,12 +192,6 @@ npm install
 
 ```bash
 npm run dev
-```
-
-Application will be available at:
-
-```text
-http://localhost:5173
 ```
 
 ### Build
@@ -294,33 +210,22 @@ npm run preview
 
 ## Assumptions
 
-- Inventory can be partially allocated.
-- Orders can be partially fulfilled.
-- `WH-000` means any warehouse.
-- `SP-000` means any supplier.
-- Credit checks occur during allocation.
-- FIFO is applied within the same priority level.
+* Orders can be partially allocated.
+* Inventory can be partially consumed.
+* `WH-000` can match any warehouse.
+* `SP-000` can match any supplier.
+* Credit validation is applied during allocation.
+* FIFO ordering is applied within the same priority level.
 
 ---
 
 ## Future Improvements
 
-- Virtualized table rendering (react-window)
-- Unit tests (Vitest)
-- Integration tests
-- Web Worker allocation processing
-- Allocation audit history
-- Multi-user collaboration
-- Real backend integration
+* Unit tests
+* Integration tests
+* Virtualized table rendering
+* Backend API integration
+* Allocation history tracking
 
 ---
 
-## Evaluation Goals
-
-This project focuses on:
-
-- Correct business rule implementation
-- Algorithm design
-- Performance with large datasets
-- User experience
-- Maintainable architecture

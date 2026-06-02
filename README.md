@@ -5,8 +5,7 @@ A React + TypeScript application for allocating salmon inventory across customer
 <img width="1366" height="725" alt="salmon_allocation" src="https://github.com/user-attachments/assets/20cdc299-eaa8-44e2-9514-2c5bb47fcae9" />
 
 ## Live Demo
-[
-https://your-project.vercel.app](https://balerion-fe-assignment.vercel.app/)
+https://balerion-fe-assignment.vercel.app/
 
 ---
 

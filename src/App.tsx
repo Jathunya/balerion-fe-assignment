@@ -18,7 +18,6 @@
 //   AllocationView      →  main content area
 // =============================================================================
 
-import React from 'react';
 import { Navbar }         from './layout/Navbar';
 import { AllocationView } from './layout/AllocationView';
 import { useAllocation }  from './hooks/useAllocation';

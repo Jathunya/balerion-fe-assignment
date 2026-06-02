@@ -20,7 +20,7 @@
 // =============================================================================
 
 import { useState, useMemo, useCallback } from 'react';
-import type { SubOrder, SortConfig, FilterState, OrderType } from '../types';
+import type { SubOrder, SortConfig, FilterState } from '../types';
 import {
   SAMPLE_ORDERS,
   SAMPLE_INVENTORY,

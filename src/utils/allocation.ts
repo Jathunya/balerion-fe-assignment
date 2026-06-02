@@ -81,11 +81,11 @@ export function getUnitPrice(
   orderType: OrderType,
   priceRules: PriceRule[]
 ): number {
-  // Find the rule for this item + supplier
-  const rule = priceRules.find(
-    r => r.itemId === supplierId || // Wildcard: if supplier is SP-000, find any rule for item
-    (r.itemId === itemId && r.supplierId === supplierId)
-  );
+  // // Find the rule for this item + supplier
+  // const rule = priceRules.find(
+  //   r => r.itemId === supplierId || // Wildcard: if supplier is SP-000, find any rule for item
+  //   (r.itemId === itemId && r.supplierId === supplierId)
+  // );
 
   // Find rule for specific supplier first; fall back to any rule for this item
   const specificRule = priceRules.find(
@@ -263,7 +263,7 @@ export function runAutoAllocation(
       // Which supplier are we actually using? (slot.supplierId is the real one)
       const actualSupplierId = order.supplierId === 'SP-000' ? slot.supplierId : order.supplierId;
       const unitPrice = getUnitPrice(order.itemId, actualSupplierId, order.type, priceRules);
-      const costForThis = canTake * unitPrice;
+      // const costForThis = canTake * unitPrice;
 
       // How much can we actually afford?
       const creditLeft   = remainingCredit - (totalAllocated * unitPrice);

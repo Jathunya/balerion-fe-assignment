@@ -18,7 +18,7 @@
 // =============================================================================
 
 import React from 'react';
-import type { SubOrder, SortConfig, FilterState, Customer } from '../../types';
+import type { SubOrder, SortConfig, FilterState, Customer } from '../types';
 import { SummaryCards } from '../allocation/SummaryCards';
 import { AllocationTable } from '../allocation/AllocationTable';
 

@@ -158,7 +158,7 @@ OrderRow.displayName = 'OrderRow';
 export const AllocationTable: React.FC<AllocationTableProps> = ({
   orders,
   sortConfig,
-  customers,
+  // customers,
   onSort,
   onManualAllocate,
   isLoading,

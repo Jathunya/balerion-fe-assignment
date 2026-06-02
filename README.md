@@ -2,7 +2,7 @@
 
 A React + TypeScript application for allocating limited salmon inventory across customer orders based on business priority rules, inventory availability, customer credit limits, and dynamic pricing.
 
-![Salmon Allocation](./public/webpage.png)
+<img width="1366" height="725" alt="salmon_allocation" src="https://github.com/user-attachments/assets/20cdc299-eaa8-44e2-9514-2c5bb47fcae9" />
 
 ---
 
